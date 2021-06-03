@@ -11,10 +11,17 @@ interface Props {
   locale: LOCALE_TYPE;
   disabledBeforeToday?: boolean;
   style?: Style;
+  allowFutureDates?: boolean;
 }
 
-function Day({ day, locale, disabledBeforeToday, style }: Props) {
-  const { date, type, isHoliday, isToday, isBeforeToday } = day;
+function Day({
+  day,
+  locale,
+  disabledBeforeToday,
+  style,
+  allowFutureDates
+}: Props) {
+  const { date, type, isHoliday, isToday, isBeforeToday, isAfterToday } = day;
 
   const dayTextColor = style?.dayTextColor || "#1d1c1d";
   const holidayColor = style?.holidayColor || "#f26522";
@@ -42,7 +49,8 @@ function Day({ day, locale, disabledBeforeToday, style }: Props) {
   };
   let dayStyle: any = {
     color:
-      disabledBeforeToday && isBeforeToday
+      disabledBeforeToday && isBeforeToday ||
+      ! allowFutureDates && isAfterToday
         ? disabledTextColor
         : isToday
         ? todayColor

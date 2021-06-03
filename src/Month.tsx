@@ -17,6 +17,7 @@ interface Props {
   isMonthFirst?: boolean;
   disabledBeforeToday?: boolean;
   style?: Style;
+  allowFutureDates?: boolean;
 }
 
 const PADDING_HORIZONTAL = 10;
@@ -29,6 +30,7 @@ function Month({
   isMonthFirst,
   disabledBeforeToday,
   style,
+  allowFutureDates,
 }: Props) {
   const { year, month } = item;
 
@@ -63,6 +65,7 @@ function Month({
           is6Weeks={is6Weeks}
           disabledBeforeToday={disabledBeforeToday}
           style={style}
+          allowFutureDates={allowFutureDates}
         />
       );
     }

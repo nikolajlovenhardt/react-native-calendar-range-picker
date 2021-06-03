@@ -27,8 +27,8 @@ interface onChangeParams {
 }
 
 interface Props {
-  pastYearRange?: number;
-  futureYearRange?: number;
+  pastMonthRange?: number;
+  futureMonthRange?: number;
   locale?: LOCALE_TYPE;
   startDate?: string;
   endDate?: string;
@@ -39,11 +39,12 @@ interface Props {
   flatListProps?: any;
   isMonthFirst?: boolean;
   disabledBeforeToday?: boolean;
+  allowFutureDates?: boolean;
 }
 
 export default function Index({
-  pastYearRange = 1,
-  futureYearRange = 2,
+  pastMonthRange = 1,
+  futureMonthRange = 2,
   initialNumToRender = 7,
   locale = LOCALE,
   startDate: prevStartDate,
@@ -54,6 +55,7 @@ export default function Index({
   flatListProps,
   isMonthFirst,
   disabledBeforeToday,
+  allowFutureDates = true
 }: Props) {
   const [startDate, setStartDate] = useState(
     prevStartDate ? prevStartDate : null
@@ -108,8 +110,8 @@ export default function Index({
   return (
     <CalendarList
       initialNumToRender={initialNumToRender}
-      pastYearRange={pastYearRange}
-      futureYearRange={futureYearRange}
+      pastMonthRange={pastMonthRange}
+      futureMonthRange={futureMonthRange}
       locale={locale}
       handlePress={handlePress}
       startDate={startDate}
@@ -118,6 +120,7 @@ export default function Index({
       flatListProps={flatListProps}
       isMonthFirst={isMonthFirst}
       disabledBeforeToday={disabledBeforeToday}
+      allowFutureDates={allowFutureDates}
     />
   );
 }

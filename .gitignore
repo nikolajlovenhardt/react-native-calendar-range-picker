@@ -1,6 +1,4 @@
-
 .vscode/
-dist/
 
 # node.js
 node_modules/

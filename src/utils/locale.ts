@@ -20,7 +20,7 @@ export const LOCALE = {
     "November",
     "December",
   ],
-  dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"],
   today: "Today",
   year: "",
 

@@ -14,6 +14,7 @@ interface Props {
   is6Weeks: boolean;
   disabledBeforeToday?: boolean;
   style?: Style;
+  allowFutureDates?: boolean;
 }
 
 function Week({
@@ -23,6 +24,7 @@ function Week({
   is6Weeks,
   disabledBeforeToday,
   style,
+  allowFutureDates
 }: Props) {
   const renderDayNames = () => {
     const result = [];
@@ -30,7 +32,7 @@ function Week({
       const day = week[i];
       const DayComponent = day.date ? (
         <TouchableOpacity
-          disabled={disabledBeforeToday && day.isBeforeToday}
+          disabled={disabledBeforeToday && day.isBeforeToday || ! allowFutureDates && day.isAfterToday}
           style={{
             flex: 1,
             height: is6Weeks ? 45 : 50,
@@ -45,6 +47,7 @@ function Week({
             locale={locale}
             disabledBeforeToday={disabledBeforeToday}
             style={style}
+            allowFutureDates={allowFutureDates}
           />
         </TouchableOpacity>
       ) : (

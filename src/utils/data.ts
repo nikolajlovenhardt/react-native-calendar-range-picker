@@ -5,6 +5,7 @@ export interface Day_Type {
   isToday: boolean;
   isBeforeToday: boolean;
   isHoliday: boolean;
+  isAfterToday: boolean;
 }
 
 export type Week_Type = Day_Type[];
@@ -14,28 +15,22 @@ export interface Month_Type {
   id: string;
 }
 
-export function getMonths(pastYearRange: number, futureYearRange: number) {
-  const currentYear = moment().year();
-  const startYear = currentYear - pastYearRange;
-  const endYear = currentYear + futureYearRange;
+export function getMonths(pastMonthRange: number, futureMonthRange: number) {
+  const current = moment()
+
+  const start = moment(current).subtract(pastMonthRange, 'month')
+  const end = moment(current).add(futureMonthRange, 'month')
 
   const months: any = [];
-  for (let i = 0; i < endYear - startYear; i++) {
-    const year = startYear + i;
-    for (let i = 0; i < 12; i++) {
-      let id = "";
-      if (i < 9) {
-        id = `${year}-0${i + 1}`;
-      } else {
-        id = `${year}-${i + 1}`;
-      }
-      months.push({
-        id,
-        year,
-        month: i + 1,
-      });
-    }
+
+  for (let date = moment(start); date.isSameOrBefore(end); date.add(1, 'month')) {
+    months.push({
+      id: date.format('YYYY-MM'),
+      year: date.format('YYYY'),
+      month: date.format('MM')
+    })
   }
+
   return months;
 }
 
@@ -59,10 +54,16 @@ export function getWeeks(
         date: null,
         isToday: false,
         isBeforeToday: false,
+        isAfterToday: false,
         isHoliday: false,
       };
       const currentDateString = currentDate.format("YYYY-MM-DD");
-      if (i == currentDate.days() && currentDate.month() == currentMonth) {
+
+      const days = currentDate.days() - 1 >= 0
+          ? currentDate.days() - 1
+          : 6
+
+      if (i == days && currentDate.month() == currentMonth) {
         if (startDate && startDate === currentDateString) {
           if (!endDate) {
             dayObj.type = "single";
@@ -89,6 +90,7 @@ export function getWeeks(
 
         const date = currentDate.clone().format("YYYY-MM-DD");
         const passedDayFromToday = currentDate.diff(moment(), "day") < 0;
+
         dayObj.date = date;
         if (date === today) {
           dayObj.isToday = true;
@@ -96,7 +98,10 @@ export function getWeeks(
         if (passedDayFromToday) {
           dayObj.isBeforeToday = true;
         }
-        if (i === 0 || i === 6) {
+        if (!passedDayFromToday) {
+          dayObj.isAfterToday = true;
+        }
+        if (i === 5 || i === 6) {
           dayObj.isHoliday = true;
         }
         week.push(dayObj);

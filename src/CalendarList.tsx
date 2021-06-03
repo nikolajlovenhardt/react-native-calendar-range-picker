@@ -11,8 +11,8 @@ import { LOCALE_TYPE } from "./utils/locale";
 import { Style } from "./index";
 
 interface Props {
-  pastYearRange: number;
-  futureYearRange: number;
+  pastMonthRange: number;
+  futureMonthRange: number;
   initialNumToRender: number;
   locale: LOCALE_TYPE;
   handlePress: (date: string) => void;
@@ -22,12 +22,14 @@ interface Props {
   flatListProps?: any;
   isMonthFirst?: boolean;
   disabledBeforeToday?: boolean;
+  allowFutureDates?: boolean;
 }
 
-const LAYOUT_HEIGHT = 370;
+const LAYOUT_HEIGHT = 370
+
 const CalendarList = ({
-  pastYearRange,
-  futureYearRange,
+  pastMonthRange,
+  futureMonthRange,
   initialNumToRender,
   locale,
   handlePress,
@@ -37,10 +39,11 @@ const CalendarList = ({
   isMonthFirst,
   disabledBeforeToday,
   style,
+  allowFutureDates = true
 }: Props) => {
   const months: Month_Type[] = useMemo(
-    () => getMonths(pastYearRange, futureYearRange),
-    [pastYearRange, futureYearRange]
+    () => getMonths(pastMonthRange, futureMonthRange),
+    [pastMonthRange, futureMonthRange]
   );
 
   const getInitialIndex = useCallback(() => {
@@ -67,6 +70,7 @@ const CalendarList = ({
           isMonthFirst={isMonthFirst}
           disabledBeforeToday={disabledBeforeToday}
           style={style}
+          allowFutureDates={allowFutureDates}
         />
       </View>
     ),
