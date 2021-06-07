@@ -95,10 +95,10 @@ export function getWeeks(
         if (date === today) {
           dayObj.isToday = true;
         }
-        if (passedDayFromToday && ! dayObj.isToday) {
+        if (passedDayFromToday) {
           dayObj.isBeforeToday = true;
         }
-        if (!passedDayFromToday) {
+        if (!passedDayFromToday && ! dayObj.isToday) {
           dayObj.isAfterToday = true;
         }
         if (i === 5 || i === 6) {
